@@ -49,6 +49,7 @@ const Week = (props: any) => {
                 variant='filled'
                 p={2}
                 rounded='md'
+                height='full'
               >
                 {course.name} {course.group} ({session.place})
               </Card>
