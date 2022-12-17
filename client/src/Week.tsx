@@ -14,7 +14,7 @@ const Week = (props: any) => {
       shadow='lg'
       rounded='md'
     >
-      <Grid templateColumns='repeat(7, 1fr)' gap={2} width='100%'>
+      <Grid autoRows='1fr' templateColumns='repeat(7, 1fr)' gap={2} width='100%'>
         <GridItem></GridItem>
         <GridItem as='b'><Center>Lunes</Center></GridItem>
         <GridItem as='b'><Center>Martes</Center></GridItem>
