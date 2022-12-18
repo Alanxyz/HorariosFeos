@@ -51,7 +51,7 @@ const Week = (props: any) => {
                 rounded='md'
                 height='full'
               >
-                {course.name} {course.group} ({session.place})
+                {course.name} ({session.place})
               </Card>
             </GridItem>
           )) 
