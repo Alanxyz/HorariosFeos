@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import data from './data.json';
 
-import { Box, Button, Center, Container, Fade, Flex, FormControl, Heading, Input, InputGroup, InputLeftElement, Spacer, Table, TableContainer, Tag, TagCloseButton, TagLabel, Tbody, Th, Thead, Tr, useColorMode, VStack, Wrap } from '@chakra-ui/react';
+import { Box, Button, Center, Container, Fade, Flex, FormControl, Heading, Input, InputGroup, InputLeftElement, Spacer, Table, TableContainer, Tag, TagCloseButton, TagLabel, Tbody, Td, Th, Thead, Tr, useColorMode, VStack, Wrap } from '@chakra-ui/react';
 import { MoonIcon, RepeatIcon, SearchIcon, SunIcon } from '@chakra-ui/icons';
 import Week from './Week';
 
@@ -171,7 +171,7 @@ function App() {
           schedulers.map((scheduler: any, i: number) => (
               <VStack>
                 <Heading size='lg' my='10'>Opción {i + 1}</Heading>
-                <TableContainer my='10'>
+                <TableContainer my='10' fontSize='sm'>
                   <Table>
                     <Thead>
                       <Tr>
@@ -185,10 +185,10 @@ function App() {
                   {
                     scheduler.map((course: any) => (
                       <Tr>
-                        <Th>{course.id}</Th>
-                        <Th>{course.name}</Th>
-                        <Th>{course.group}</Th>
-                        <Th>{course.teacher}</Th>
+                        <Td>{course.id}</Td>
+                        <Td>{course.name}</Td>
+                        <Td>{course.group}</Td>
+                        <Td>{course.teacher}</Td>
                       </Tr>
                     ))
                   }
