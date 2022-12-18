@@ -138,7 +138,7 @@ function App() {
               .filter(course => course
                 .toLowerCase()
                 .normalize('NFD').replace(/\p{Diacritic}/gu, '')
-                .includes(searchInput.toLowerCase().normalize('NFD')))
+                .includes(searchInput.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '')))
             .filter(course => !selectedCourses.includes(course))
               .map(course => (
                 <Button
