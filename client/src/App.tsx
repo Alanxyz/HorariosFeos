@@ -169,9 +169,9 @@ function App() {
       <Fade in={selectedCourses.length !== 0 && schedulers.length > 0}>
         {
           schedulers.map((scheduler: any, i: number) => (
-              <VStack>
+              <VStack spacing='12'>
                 <Heading size='lg' my='10'>Opción {i + 1}</Heading>
-                <TableContainer my='10' fontSize='sm'>
+                <TableContainer fontSize='sm'>
                   <Table>
                     <Thead>
                       <Tr>
