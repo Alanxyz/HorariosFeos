@@ -72,7 +72,6 @@ function App() {
       validSchedulers = schedulers.filter((scheduler: any) => isAValidScheduler(scheduler));
     } 
     
-    console.log(validSchedulers);
     setSchedulers(validSchedulers);
     setGod(validSchedulers.length === 0);
   }
