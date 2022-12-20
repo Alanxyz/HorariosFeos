@@ -1,7 +1,12 @@
 import { Box, Card, Center, Grid, GridItem } from "@chakra-ui/react";
+import { FC } from "react";
 import { Course, Session } from "./types";
 
-const Week = (props: { scheduler: Course[] }) => {
+interface WeekProps {
+  scheduler: Course[];
+}
+
+const Week: FC<WeekProps> = (props: WeekProps) => {
 
   return (
     <Box 
