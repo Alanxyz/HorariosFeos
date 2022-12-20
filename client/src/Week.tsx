@@ -1,6 +1,7 @@
 import { Box, Card, Center, Grid, GridItem } from "@chakra-ui/react";
+import { Course, Session } from "./types";
 
-const Week = (props: any) => {
+const Week = (props: { scheduler: Course[] }) => {
 
   return (
     <Box 
@@ -38,8 +39,8 @@ const Week = (props: any) => {
         <GridItem rowStart={14}>8:00 pm</GridItem>
 
         {
-          props.scheduler.map((course: any) => (
-          course.sessions.map((session: any) => (
+          props.scheduler.map((course: Course) => (
+          course.sessions.map((session: Session) => (
             <GridItem
               rowStart={parseInt(session.begin.split(':')[0]) - 6}
               rowEnd={parseInt(session.end.split(':')[0]) - 6}

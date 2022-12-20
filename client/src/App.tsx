@@ -1,67 +1,67 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import data from './data.json';
 
 import { Box, Button, Center, Container, Fade, Flex, FormControl, Heading, Input, InputGroup, InputLeftElement, Spacer, Table, TableContainer, Tag, TagCloseButton, TagLabel, Tbody, Td, Th, Thead, Tr, useColorMode, VStack, Wrap } from '@chakra-ui/react';
 import { MoonIcon, RepeatIcon, SearchIcon, SunIcon } from '@chakra-ui/icons';
 import Week from './Week';
+import { Course, Session } from './types';
 
-function App() {
+const App: FC = () => {
 
   // Hooks
   const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
   const [searchInput, setSearchInput] = useState('');
-  const [schedulers, setSchedulers] = useState<any[]>([]);
+  const [schedulers, setSchedulers] = useState<Course[][]>([]);
   const [god, setGod] = useState(false);
 
-  // Helpers
   const { colorMode, toggleColorMode } = useColorMode();
 
-  const time2num = (time: string): number => parseInt(time.replace(':', ''))
+  const generateSchedulers = (): void => {
+    const time2num = (time: string): number => parseInt(time.replace(':', ''))
 
-  const sessionsDisjoin = (x: any, y: any): boolean => {
-    if (x.day !== y.day) return true;
-    
-    const x_begin: number = time2num(x.begin);
-    const x_end: number = time2num(x.end);
-    const y_begin: number = time2num(y.begin);
-    const y_end: number = time2num(y.end);
-    
-    const begin = Math.min(x_begin, y_begin);
-    const end = Math.max(x_end, y_end);
+    const sessionsDisjoin = (x: Session, y: Session): boolean => {
+      if (x.day !== y.day) return true;
+      
+      const x_begin: number = time2num(x.begin);
+      const x_end: number = time2num(x.end);
+      const y_begin: number = time2num(y.begin);
+      const y_end: number = time2num(y.end);
+      
+      const begin = Math.min(x_begin, y_begin);
+      const end = Math.max(x_end, y_end);
 
-    return end - begin >= x_end - x_begin + y_end - y_begin;
-  }
+      return end - begin >= x_end - x_begin + y_end - y_begin;
+    }
 
-  const coursesDisjoin = (x: any, y: any): boolean => {
-    let disjoin = true;
+    const coursesDisjoin = (x: Course, y: Course): boolean => {
+      let disjoin = true;
 
-    x.sessions.map((xSession: any) => {
-      y.sessions.map((ySession: any) => {
-          if (!sessionsDisjoin(xSession, ySession)) disjoin = false;
-          return null;
-        })
-        return null;
-      });
-
-    return disjoin;
-  }
-
-  const isAValidScheduler = (scheduler: any): boolean => {
-    let isValid = true;
-    scheduler.map((i: any) => {
-      scheduler.map((j: any) => {
-          if (i.id !== j.id) if (!coursesDisjoin(i, j)) isValid = false;
+      x.sessions.map((xSession: Session) => {
+        y.sessions.map((ySession: Session) => {
+            if (!sessionsDisjoin(xSession, ySession)) disjoin = false;
+            return null;
+          })
           return null;
         });
-        return null;
-      });
 
-    return isValid;
-  }
+      return disjoin;
+    }
 
-  const cartesian = (...a: any[]) => a.reduce((a, b) => a.flatMap((d: any) => b.map((e: any) => [d, e].flat())));
+    const isAValidScheduler = (scheduler: Course[]): boolean => {
+      let isValid = true;
+      scheduler.map((i: Course) => {
+        scheduler.map((j: Course) => {
+            if (i.id !== j.id) if (!coursesDisjoin(i, j)) isValid = false;
+            return null;
+          });
+          return null;
+        });
 
-  const generateSchedulers = (): any => {
+      return isValid;
+    }
+
+    const cartesian = (...a: any[]) => a.reduce((a, b) => a.flatMap((d: any) => b.map((e: any) => [d, e].flat())));
+
     const classes = selectedCourses.map(className => data.courses.filter(course => className === course.name));
 
     let validSchedulers;
@@ -69,7 +69,7 @@ function App() {
     else if (selectedCourses.length === 1) validSchedulers = classes[0].map(x => [x]);
     else {
       const schedulers = cartesian(...classes);
-      validSchedulers = schedulers.filter((scheduler: any) => isAValidScheduler(scheduler));
+      validSchedulers = schedulers.filter((scheduler: Course[]) => isAValidScheduler(scheduler));
     } 
     
     setSchedulers(validSchedulers);
@@ -168,7 +168,7 @@ function App() {
 
       <Fade in={selectedCourses.length !== 0 && schedulers.length > 0}>
         {
-          schedulers.map((scheduler: any, i: number) => (
+          schedulers.map((scheduler: Course[], i: number) => (
               <VStack spacing='12'>
                 <Heading size='lg' my='10'>Opción {i + 1}</Heading>
                 <TableContainer fontSize='sm'>
@@ -183,7 +183,7 @@ function App() {
                     </Thead>
                   <Tbody>
                   {
-                    scheduler.map((course: any) => (
+                    scheduler.map((course: Course) => (
                       <Tr>
                         <Td>{course.id}</Td>
                         <Td>{course.name}</Td>
