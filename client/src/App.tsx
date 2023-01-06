@@ -101,7 +101,7 @@ const App: FC = () => {
           <Wrap>
             {
               selectedCourses.map(course => (
-                <Tag>
+                <Tag key={course}>
                   <TagLabel>{ course }</TagLabel>
                   <TagCloseButton
                   onClick={() => {
@@ -141,6 +141,7 @@ const App: FC = () => {
             .filter(course => !selectedCourses.includes(course))
               .map(course => (
                 <Button
+                  key={course}
                   onClick={() => {
                     setSelectedCourses([...selectedCourses, course]);
                     setSearchInput('');
@@ -169,7 +170,7 @@ const App: FC = () => {
       <Fade in={selectedCourses.length !== 0 && schedulers.length > 0}>
         {
           schedulers.map((scheduler: Course[], i: number) => (
-              <VStack spacing='12'>
+              <VStack spacing='12' key={i.toString()}>
                 <Heading size='lg' my='10'>Opción {i + 1}</Heading>
                 <TableContainer fontSize='sm'>
                   <Table>
@@ -184,7 +185,7 @@ const App: FC = () => {
                   <Tbody>
                   {
                     scheduler.map((course: Course) => (
-                      <Tr>
+                      <Tr key={course.id}>
                         <Td>{course.id}</Td>
                         <Td>{course.name}</Td>
                         <Td>{course.group}</Td>
