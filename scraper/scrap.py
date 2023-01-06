@@ -38,7 +38,7 @@ for _row in _rows[1:-1]:
     _cells = _row.find_all('td')
 
     course = {}
-    course['id'] = _cells[0].text.replace(u'\xa0', u' ')
+    course['id'] = _cells[0].text.strip()
 
     # Excepciones
     exception_ids = ('176', '107', '108')
