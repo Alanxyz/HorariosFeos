@@ -58,6 +58,8 @@ for _row in _rows[1:-1]:
             elif course['id'] == '20' and i == 4: _text = 'VIERNES/15-17/F7'
             elif course['id'] == '29' and i == 6: _text = 'VIERNES/8-11/LAB. DE BIOLOGÍA EDIF. G'
             elif course['id'] == '45' and i == 3: _text = 'MARTES/15-17/F2'
+            elif course['id'] == '106' and i == 3: _text = 'LUNES/14-16/AUDITORIO DEL EDIF. G'
+            elif course['id'] == '106' and i == 4: _text = 'MIÉRCOLES/14-16/F7	'
             elif course['id'] == '146' and i == 4: _text = 'MIÉRCOLES/12-14/C2'
             elif course['id'] == '175' and i == 3: _text = 'JUEVES/15-18/AUDITORIO DE EDIF. G'
 
