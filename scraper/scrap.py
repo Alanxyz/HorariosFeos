@@ -41,7 +41,7 @@ for _row in _rows[1:-1]:
     course['id'] = _cells[0].text.strip()
 
     # Excepciones
-    exception_ids = ('176', '107', '108')
+    exception_ids = ('176')
     if course['id'] in exception_ids: continue
 
     course['name'] = _cells[1].text.strip()
