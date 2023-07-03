@@ -41,7 +41,7 @@ for _row in _rows[1:-1]:
     course['id'] = _cells[0].text.strip()
 
     # Excepciones
-    exception_ids = ()
+    exception_ids = ('152')
     if course['id'] in exception_ids: continue
 
     course['name'] = _cells[1].text.strip()
@@ -54,15 +54,19 @@ for _row in _rows[1:-1]:
         if _text != '':
 
             # Excepciones
-            if course['id'] == '11' and i == 3: _text = 'MARTES/15-17/F8'
-            elif course['id'] == '20' and i == 4: _text = 'VIERNES/15-17/F7'
-            elif course['id'] == '29' and i == 6: _text = 'VIERNES/8-11/LAB. DE BIOLOGÍA EDIF. G'
-            elif course['id'] == '45' and i == 3: _text = 'MARTES/15-17/F2'
-            elif course['id'] == '106' and i == 3: _text = 'LUNES/14-16/AUDITORIO DEL EDIF. G'
-            elif course['id'] == '106' and i == 4: _text = 'MIÉRCOLES/14-16/F7	'
-            elif course['id'] == '144' and i == 4: _text = 'MIÉRCOLES/12-14/C2'
-            elif course['id'] == '173' and i == 3: _text = 'JUEVES/15-18/AUDITORIO DE EDIF. G'
+            if course['id'] == '5' and i == 4: _text = 'MIÉRCOLES/12-14/F2'
+            elif course['id'] == '63' and i == 5: _text = 'MIÉRCOLES/10-12/LAB. DE FÍSICA MODERNA, EDIF. G'
+            elif course['id'] == '122' and i == 4: _text = 'MIÉRCOLES/14-15:30/C3'
+            elif course['id'] == '151' and i == 3: _text = 'LUNES/8-10/LAB. DE ELECTRÓNICA, EDIF. D'
+            elif course['id'] == '161' and i == 4: _text = 'MIÉRCOLES/8-10/F8'
+            elif course['id'] == '162' and i == 4: _text = 'MIÉRCOLES/8-10/F8'
+            elif course['id'] == '163' and i == 4: _text = 'MIÉRCOLES/8-10/F8'
+            elif course['id'] == '164' and i == 3: _text = 'JUEVES/8-10/F5'
+            elif course['id'] == '165' and i == 3: _text = 'JUEVES/8-10/F5'
 
+
+            print(course['id'])
+            print(_text)
             day = day2number[_text.split('/')[0].strip()]
             begin = format_time(_text.split('/')[1].split('-')[0].strip())
             end = format_time(_text.split('/')[1].split('-')[1].strip())
