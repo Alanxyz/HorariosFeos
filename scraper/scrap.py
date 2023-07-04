@@ -34,14 +34,14 @@ day2number = {
 
 courses = []
 
-for _row in _rows[1:-1]:
+for _row in _rows[1:]:
     _cells = _row.find_all('td')
 
     course = {}
     course['id'] = _cells[0].text.strip()
 
     # Excepciones
-    exception_ids = ('152')
+    exception_ids = ('152',)
     if course['id'] in exception_ids: continue
 
     course['name'] = _cells[1].text.strip()
@@ -64,9 +64,6 @@ for _row in _rows[1:-1]:
             elif course['id'] == '164' and i == 3: _text = 'JUEVES/8-10/F5'
             elif course['id'] == '165' and i == 3: _text = 'JUEVES/8-10/F5'
 
-
-            print(course['id'])
-            print(_text)
             day = day2number[_text.split('/')[0].strip()]
             begin = format_time(_text.split('/')[1].split('-')[0].strip())
             end = format_time(_text.split('/')[1].split('-')[1].strip())
@@ -96,4 +93,4 @@ with open('data.json', 'w') as file:
     }
     json.dump(data, file)
 
-pprint(courses)
+# pprint(courses)
