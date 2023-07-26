@@ -41,7 +41,7 @@ for _row in _rows[1:]:
     course['id'] = _cells[0].text.strip()
 
     # Excepciones
-    exception_ids = ('152',)
+    exception_ids = ('153',)
     if course['id'] in exception_ids: continue
 
     course['name'] = _cells[1].text.strip()
@@ -57,12 +57,12 @@ for _row in _rows[1:]:
             if course['id'] == '5' and i == 4: _text = 'MIÉRCOLES/12-14/F2'
             elif course['id'] == '63' and i == 5: _text = 'MIÉRCOLES/10-12/LAB. DE FÍSICA MODERNA, EDIF. G'
             elif course['id'] == '122' and i == 4: _text = 'MIÉRCOLES/14-15:30/C3'
-            elif course['id'] == '151' and i == 3: _text = 'LUNES/8-10/LAB. DE ELECTRÓNICA, EDIF. D'
-            elif course['id'] == '161' and i == 4: _text = 'MIÉRCOLES/8-10/F8'
+            elif course['id'] == '152' and i == 3: _text = 'LUNES/8-10/LAB. DE ELECTRÓNICA, EDIF. D'
             elif course['id'] == '162' and i == 4: _text = 'MIÉRCOLES/8-10/F8'
             elif course['id'] == '163' and i == 4: _text = 'MIÉRCOLES/8-10/F8'
-            elif course['id'] == '164' and i == 3: _text = 'JUEVES/8-10/F5'
+            elif course['id'] == '164' and i == 4: _text = 'MIÉRCOLES/8-10/F8'
             elif course['id'] == '165' and i == 3: _text = 'JUEVES/8-10/F5'
+            elif course['id'] == '166' and i == 3: _text = 'JUEVES/8-10/F5'
 
             day = day2number[_text.split('/')[0].strip()]
             begin = format_time(_text.split('/')[1].split('-')[0].strip())
