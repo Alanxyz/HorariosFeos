@@ -1,5 +1,5 @@
 export interface Session {
-  day: string;
+  day: number;
   begin: string;
   end: string;
   place: string;
@@ -12,3 +12,8 @@ export interface Course {
   teacher: string;
   sessions: Session[];
 }
+
+export interface Scheduler{
+  courses: Course[];
+}
+

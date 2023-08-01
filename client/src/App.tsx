@@ -1,17 +1,23 @@
 import { FC, useState } from 'react';
-import data from './data.json';
 
-import { Box, Button, Center, Container, Fade, Flex, FormControl, Heading, Input, InputGroup, InputLeftElement, Spacer, Table, TableContainer, Tag, TagCloseButton, TagLabel, Tbody, Td, Th, Thead, Tr, useColorMode, VStack, Wrap } from '@chakra-ui/react';
-import { MoonIcon, RepeatIcon, SearchIcon, SunIcon } from '@chakra-ui/icons';
+import rawData from './data.json';
+
+import { Scheduler, Course, Session } from './types';
+
+import { Box, Button, Center, Container, Fade, Flex, FormControl, Heading, Input, InputGroup, InputLeftElement, Spacer, Table, TableContainer, Tag, TagCloseButton, TagRightIcon, TagLabel, Tbody, Td, Th, Thead, Tr, useColorMode, VStack, Wrap } from '@chakra-ui/react';
+import { AddIcon, MoonIcon, RepeatIcon, SearchIcon, SunIcon } from '@chakra-ui/icons';
 import Week from './Week';
-import { Course, Session } from './types';
 
 const App: FC = () => {
 
+  const avalibleCourses: Course[] = rawData.courses; 
+  const avalibleUDAs: string[] = rawData.options; 
+
   // Hooks
   const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
+  const [sugestedCourses, setSugestedCourses] = useState<string[]>([]);
   const [searchInput, setSearchInput] = useState('');
-  const [schedulers, setSchedulers] = useState<Course[][]>([]);
+  const [schedulers, setSchedulers] = useState<Scheduler[]>([]);
   const [god, setGod] = useState(false);
 
   const { colorMode, toggleColorMode } = useColorMode();
@@ -47,10 +53,10 @@ const App: FC = () => {
       return disjoin;
     }
 
-    const isAValidScheduler = (scheduler: Course[]): boolean => {
+    const isAValidScheduler = (scheduler: Scheduler): boolean => {
       let isValid = true;
-      scheduler.map((i: Course) => {
-        scheduler.map((j: Course) => {
+      scheduler.courses.map((i: Course) => {
+        scheduler.courses.map((j: Course) => {
             if (i.id !== j.id) if (!coursesDisjoin(i, j)) isValid = false;
             return null;
           });
@@ -62,17 +68,32 @@ const App: FC = () => {
 
     const cartesian = (...a: any[]) => a.reduce((a, b) => a.flatMap((d: any) => b.map((e: any) => [d, e].flat())));
 
-    const classes = selectedCourses.map(className => data.courses.filter(course => className === course.name));
+    const classes = selectedCourses.map(className => avalibleCourses.filter(course => className === course.name));
 
-    let validSchedulers;
-    if (selectedCourses.length === 0) validSchedulers = [];
-    else if (selectedCourses.length === 1) validSchedulers = classes[0].map(x => [x]);
+    let validSchedulers: Scheduler[];
+    if (selectedCourses.length === 0)
+      validSchedulers = [];
+    else if (selectedCourses.length === 1)
+      validSchedulers = classes[0].map(x => { return { courses: [x] } });
     else {
-      const schedulers = cartesian(...classes);
-      validSchedulers = schedulers.filter((scheduler: Course[]) => isAValidScheduler(scheduler));
+      const schedulers = cartesian(...classes).map((courses: Course[]) => { return { courses } });
+      validSchedulers = schedulers.filter((scheduler: Scheduler) => isAValidScheduler(scheduler));
     } 
+
+    const possibleCourses: Course[] = avalibleCourses
+      .filter((course: Course) => 
+        validSchedulers.map(scheduler => 
+          isAValidScheduler({ courses: [...scheduler.courses, course] })
+        ).includes(true)
+      );
+
+     let sugestions = possibleCourses.map(course => course.name);
+     sugestions = sugestions
+      .filter((value, index) => sugestions.indexOf(value) === index)
+      .filter(name => !selectedCourses.includes(name));
     
     setSchedulers(validSchedulers);
+    setSugestedCourses(sugestions);
     setGod(validSchedulers.length === 0);
   }
 
@@ -115,6 +136,29 @@ const App: FC = () => {
           </Wrap>
         </Center>
 
+        <Center>
+          <Heading size='md' my='10'>Sugerencias</Heading>
+        </Center>
+
+        <Center>
+          <Wrap>
+            {
+              sugestedCourses.map(course => (
+                <Tag key={course}>
+                  <TagLabel>{ course }</TagLabel>
+                  <TagCloseButton
+                    as={AddIcon}
+                    onClick={() => {
+                      setSelectedCourses([...selectedCourses, course]);
+                      setSearchInput('');
+                      setSchedulers([]);
+                    }}
+                  />
+                </Tag>
+              ))
+            }
+          </Wrap>
+        </Center>
 
         <FormControl my='8'>
           <InputGroup>
@@ -132,8 +176,7 @@ const App: FC = () => {
 
         <VStack>
           {
-            searchInput !== '' && data
-              .options
+            searchInput !== '' && avalibleUDAs
               .filter(course => course
                 .toLowerCase()
                 .normalize('NFD').replace(/\p{Diacritic}/gu, '')
@@ -169,7 +212,7 @@ const App: FC = () => {
 
       <Fade in={selectedCourses.length !== 0 && schedulers.length > 0}>
         {
-          schedulers.map((scheduler: Course[], i: number) => (
+          schedulers.map((scheduler: Scheduler, i: number) => (
               <VStack spacing='12' key={i.toString()}>
                 <Heading size='lg' my='10'>Opción {i + 1}</Heading>
                 <TableContainer fontSize='sm'>
@@ -184,7 +227,7 @@ const App: FC = () => {
                     </Thead>
                   <Tbody>
                   {
-                    scheduler.map((course: Course) => (
+                    scheduler.courses.map((course: Course) => (
                       <Tr key={course.id}>
                         <Td>{course.id}</Td>
                         <Td>{course.name}</Td>
