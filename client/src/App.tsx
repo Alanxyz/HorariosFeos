@@ -4,7 +4,7 @@ import rawData from './data.json';
 
 import { Scheduler, Course, Session } from './types';
 
-import { Box, Button, Center, Container, Fade, Flex, FormControl, Heading, Input, InputGroup, InputLeftElement, Spacer, Table, TableContainer, Tag, TagCloseButton, TagRightIcon, TagLabel, Tbody, Td, Th, Thead, Tr, useColorMode, VStack, Wrap } from '@chakra-ui/react';
+import { Box, Button, Center, Container, Fade, Flex, FormControl, Heading, Input, InputGroup, InputLeftElement, Spacer, Table, TableContainer, Tag, TagCloseButton, TagLabel, Tbody, Td, Th, Thead, Tr, useColorMode, VStack, Wrap } from '@chakra-ui/react';
 import { AddIcon, MoonIcon, RepeatIcon, SearchIcon, SunIcon } from '@chakra-ui/icons';
 import Week from './Week';
 
