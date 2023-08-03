@@ -1,12 +1,16 @@
 import { Box, Card, Center, Grid, GridItem } from "@chakra-ui/react";
 import { FC } from "react";
-import { Course, Session } from "./types";
+import { Scheduler, Course, Session } from "./types";
 
 interface WeekProps {
-  scheduler: Course[];
+  scheduler: Scheduler;
 }
 
 const Week: FC<WeekProps> = (props: WeekProps) => {
+
+  const formatName = (name: string) => name.split(' ').length >= 3
+    ? name.split(' ').map(word => word[0]).join('.') + '.'
+    : name
 
   return (
     <Box 
@@ -44,13 +48,13 @@ const Week: FC<WeekProps> = (props: WeekProps) => {
         <GridItem rowStart={14}>8:00 pm</GridItem>
 
         {
-          props.scheduler.map((course: Course) => (
+          props.scheduler.courses.map((course: Course) => (
            course.sessions.map((session: Session, i: Number) => (
             <GridItem
               key={course.name + i.toString()}
               rowStart={parseInt(session.begin.split(':')[0]) - 6}
               rowEnd={parseInt(session.end.split(':')[0]) - 6}
-              colStart={parseInt(session.day) + 1}
+              colStart={session.day+ 1}
             >
               <Card
                 variant='filled'
@@ -58,7 +62,7 @@ const Week: FC<WeekProps> = (props: WeekProps) => {
                 rounded='md'
                 height='full'
               >
-                {course.name} ({session.place})
+                {formatName(course.name)} ({session.place})
               </Card>
             </GridItem>
           )) 
