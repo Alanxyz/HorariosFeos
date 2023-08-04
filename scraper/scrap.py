@@ -49,6 +49,8 @@ for _row in _rows[1:]:
     course['teacher'] = _cells[7].text.strip()
     course['sessions'] = []
 
+    pprint(course)
+
     for i in range(3, 7):
         _text = _cells[i].get_text(strip=True).strip()
         if _text != '':
@@ -57,12 +59,12 @@ for _row in _rows[1:]:
             if course['id'] == '5' and i == 4: _text = 'MIÉRCOLES/12-14/F2'
             elif course['id'] == '30' and i == 3: _text = 'SÁBADO/8-13/C3'
             elif course['id'] == '63' and i == 5: _text = 'MIÉRCOLES/10-12/LAB. DE FÍSICA MODERNA, EDIF. G'
-            elif course['id'] == '149' and i == 3: _text = 'LUNES/8-10/LAB. DE ELECTRÓNICA, EDIF. D'
-            elif course['id'] == '159' and i == 4: _text = 'MIÉRCOLES/8-10/F8'
+            elif course['id'] == '150' and i == 3: _text = 'LUNES/8-10/LAB. DE ELECTRÓNICA, EDIF. D'
             elif course['id'] == '160' and i == 4: _text = 'MIÉRCOLES/8-10/F8'
             elif course['id'] == '161' and i == 4: _text = 'MIÉRCOLES/8-10/F8'
-            elif course['id'] == '162' and i == 3: _text = 'JUEVES/8-10/F5'
+            elif course['id'] == '162' and i == 4: _text = 'MIÉRCOLES/8-10/F8'
             elif course['id'] == '163' and i == 3: _text = 'JUEVES/8-10/F5'
+            elif course['id'] == '164' and i == 3: _text = 'JUEVES/8-10/F5'
 
             day = day2number[_text.split('/')[0].strip()]
             begin = format_time(_text.split('/')[1].split('-')[0].strip())
