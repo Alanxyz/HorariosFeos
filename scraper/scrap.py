@@ -3,10 +3,11 @@ import json
 from pprint import pprint
 from bs4 import BeautifulSoup
 
-url = 'http://www.dci.ugto.mx/estudiantes/index.php/mcursos/horarios-licenciatura'
+
+url = 'https://www.dci.ugto.mx/estudiantes/index.php/mcursos/horarios-licenciatura'
 
 print('Sending request... ', end='')
-request = requests.get(url)
+request = requests.get(url, verify = False)
 document = request.content
 print('OK!')
 
@@ -54,17 +55,14 @@ for _row in _rows[1:]:
     for i in range(3, 7):
         _text = _cells[i].get_text(strip=True).strip()
         if _text != '':
-
+            
             # Excepciones
-            if course['id'] == '5' and i == 4: _text = 'MIÉRCOLES/12-14/F2'
-            elif course['id'] == '30' and i == 3: _text = 'SÁBADO/8-13/C3'
-            elif course['id'] == '63' and i == 5: _text = 'MIÉRCOLES/10-12/LAB. DE FÍSICA MODERNA, EDIF. G'
-            elif course['id'] == '150' and i == 3: _text = 'LUNES/8-10/LAB. DE ELECTRÓNICA, EDIF. D'
-            elif course['id'] == '160' and i == 4: _text = 'MIÉRCOLES/8-10/F8'
-            elif course['id'] == '161' and i == 4: _text = 'MIÉRCOLES/8-10/F8'
-            elif course['id'] == '162' and i == 4: _text = 'MIÉRCOLES/8-10/F8'
-            elif course['id'] == '163' and i == 3: _text = 'JUEVES/8-10/F5'
-            elif course['id'] == '164' and i == 3: _text = 'JUEVES/8-10/F5'
+            if course['id'] == '11' and i == 3: _text = 'MARTES/15-17/F8'
+            elif course['id'] == '20' and i == 4: _text = 'VIERNES/15-17/F7'
+            elif course['id'] == '29' and i == 6: _text = 'VIERNES/8-11/LAB. DE BIOLOGÍA EDIF. G'
+            elif course['id'] == '45' and i == 3: _text = 'MARTES/15-17/F2'
+            elif course['id'] == '152' and i == 4: _text = 'MIÉRCOLES/12-14/C2'
+            
 
             day = day2number[_text.split('/')[0].strip()]
             begin = format_time(_text.split('/')[1].split('-')[0].strip())
