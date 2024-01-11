@@ -4,7 +4,7 @@ import rawData from './data.json';
 
 import { Scheduler, Course, Session } from './types';
 
-import { Box, Button, Center, Container, Fade, Flex, FormControl, Heading, Input, InputGroup, InputLeftElement, Spacer, Table, TableContainer, Tag, TagCloseButton, TagLabel, Tbody, Td, Th, Thead, Tr, useColorMode, VStack, Wrap } from '@chakra-ui/react';
+import { Box, Button, Center, Container, Fade, Flex, FormControl, Heading, Input, InputGroup, InputLeftElement, Spacer, Table, TableContainer, Tag, TagCloseButton, TagLabel, Tbody, Td, Th, Thead, Tr, useColorMode, VStack, Wrap, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel } from '@chakra-ui/react';
 import { AddIcon, MoonIcon, RepeatIcon, SearchIcon, SunIcon } from '@chakra-ui/icons';
 import Week from './Week';
 
@@ -137,31 +137,7 @@ const App: FC = () => {
           </Wrap>
         </Center>
 
-        <Center>
-          <Heading size='md' my='10'>Sugerencias</Heading>
-        </Center>
-
-        <Center>
-          <Wrap>
-            {
-              sugestedCourses.map(course => (
-                <Tag key={course}>
-                  <TagLabel>{ course }</TagLabel>
-                  <TagCloseButton
-                    as={AddIcon}
-                    onClick={() => {
-                      setSelectedCourses([...selectedCourses, course]);
-                      setSearchInput('');
-                      setSchedulers([]);
-                    }}
-                  />
-                </Tag>
-              ))
-            }
-          </Wrap>
-        </Center>
-
-        <FormControl my='8'>
+        <FormControl my='6'>
           <InputGroup>
             <InputLeftElement
               pointerEvents='none'
@@ -174,6 +150,38 @@ const App: FC = () => {
             />
           </InputGroup>
         </FormControl>
+
+        <Accordion allowToggle>
+          <AccordionItem>
+              <AccordionButton>
+                <Box as='span' flex='1' textAlign='left'>
+                  <Heading size='sm'>Sugerencias</Heading>
+                </Box>
+              <AccordionIcon />
+              </AccordionButton>
+            <AccordionPanel>
+              <Center>
+                <Wrap>
+                  {
+                    sugestedCourses.map(course => (
+                      <Tag key={course}>
+                        <TagLabel>{ course }</TagLabel>
+                        <TagCloseButton
+                          as={AddIcon}
+                          onClick={() => {
+                            setSelectedCourses([...selectedCourses, course]);
+                            setSearchInput('');
+                            setSchedulers([]);
+                          }}
+                        />
+                      </Tag>
+                    ))
+                  }
+                </Wrap>
+              </Center>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
 
         <VStack>
           {

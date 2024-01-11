@@ -21,7 +21,6 @@ const Week: FC<WeekProps> = (props: WeekProps) => {
       }}
       fontSize={{ lg: 'md', md: 'sm', base: 'xs' }}
       padding={2}
-      shadow='lg'
       rounded='md'
     >
       <Grid autoRows='1fr' templateColumns='repeat(7, 1fr)' gap={2} width='100%'>
