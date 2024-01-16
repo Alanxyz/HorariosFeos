@@ -3,7 +3,6 @@ import json
 from pprint import pprint
 from bs4 import BeautifulSoup
 
-
 url = 'https://www.dci.ugto.mx/estudiantes/index.php/mcursos/horarios-licenciatura'
 
 print('Sending request... ', end='')
@@ -55,14 +54,13 @@ for _row in _rows[1:]:
     for i in range(3, 7):
         _text = _cells[i].get_text(strip=True).strip()
         if _text != '':
-            
+
             # Excepciones
             if course['id'] == '11' and i == 3: _text = 'MARTES/15-17/F8'
             elif course['id'] == '20' and i == 4: _text = 'VIERNES/15-17/F7'
             elif course['id'] == '29' and i == 6: _text = 'VIERNES/8-11/LAB. DE BIOLOGÍA EDIF. G'
             elif course['id'] == '45' and i == 3: _text = 'MARTES/15-17/F2'
             elif course['id'] == '152' and i == 4: _text = 'MIÉRCOLES/12-14/C2'
-            
 
             day = day2number[_text.split('/')[0].strip()]
             begin = format_time(_text.split('/')[1].split('-')[0].strip())
@@ -77,7 +75,6 @@ for _row in _rows[1:]:
             }
 
             course['sessions'].append(session)
-
 
     courses.append(course)
 
