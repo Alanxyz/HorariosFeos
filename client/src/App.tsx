@@ -151,14 +151,37 @@ const App: FC = () => {
           </InputGroup>
         </FormControl>
 
+        <VStack>
+          {
+            searchInput !== '' && avalibleUDAs
+              .filter(course => course
+                .toLowerCase()
+                .normalize('NFD').replace(/\p{Diacritic}/gu, '')
+                .includes(searchInput.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '')))
+            .filter(course => !selectedCourses.includes(course))
+              .map(course => (
+                <Button
+                  key={course}
+                  onClick={() => {
+                    setSelectedCourses([...selectedCourses, course]);
+                    setSearchInput('');
+                    setSchedulers([]);
+                  }}
+                  width='100%'
+                  size='sm'
+                >{ course }</Button>
+              ))
+          }
+        </VStack>
+
         <Accordion allowToggle>
           <AccordionItem>
-              <AccordionButton>
-                <Box as='span' flex='1' textAlign='left'>
-                  <Heading size='sm'>Sugerencias</Heading>
-                </Box>
+            <AccordionButton>
+              <Box as='span' flex='1' textAlign='left'>
+                <Heading size='sm'>Sugerencias</Heading>
+              </Box>
               <AccordionIcon />
-              </AccordionButton>
+            </AccordionButton>
             <AccordionPanel>
               <Center>
                 <Wrap>
@@ -182,29 +205,6 @@ const App: FC = () => {
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
-
-        <VStack>
-          {
-            searchInput !== '' && avalibleUDAs
-              .filter(course => course
-                .toLowerCase()
-                .normalize('NFD').replace(/\p{Diacritic}/gu, '')
-                .includes(searchInput.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '')))
-            .filter(course => !selectedCourses.includes(course))
-              .map(course => (
-                <Button
-                  key={course}
-                  onClick={() => {
-                    setSelectedCourses([...selectedCourses, course]);
-                    setSearchInput('');
-                    setSchedulers([]);
-                  }}
-                  width='100%'
-                  size='sm'
-                >{ course }</Button>
-              ))
-          }
-        </VStack>
 
       </Container>
 
