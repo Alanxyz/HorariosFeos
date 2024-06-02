@@ -4,7 +4,7 @@ import rawData from './data.json';
 
 import { Scheduler, Course, Session } from './types';
 
-import { Box, Button, Center, Container, Fade, Flex, FormControl, Heading, Input, InputGroup, InputLeftElement, Spacer, Table, TableContainer, Tag, TagCloseButton, TagLabel, Tbody, Td, Th, Thead, Tr, useColorMode, VStack, Wrap, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel } from '@chakra-ui/react';
+import { Box, Link, Button, Center, Container, Fade, Flex, FormControl, Heading, Input, InputGroup, InputLeftElement, Spacer, Table, TableContainer, Tag, TagCloseButton, TagLabel, Tbody, Td, Th, Thead, Tr, useColorMode, VStack, Wrap, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, Alert, AlertIcon, AlertTitle, AlertDescription } from '@chakra-ui/react';
 import { AddIcon, MoonIcon, RepeatIcon, SearchIcon, SunIcon } from '@chakra-ui/icons';
 import Week from './Week';
 
@@ -259,6 +259,22 @@ const App: FC = () => {
           <Heading size='lg' my='10'>Llamen a Dios :0</Heading>
         </Center>
       </Fade>
+
+      <Container>
+        <Alert status='warning'
+          variant='subtle'
+          flexDirection='column'
+          alignItems='center'
+          justifyContent='center'
+          textAlign='center'
+        >
+          <AlertIcon boxSize='3em'/>
+          <AlertTitle my='1em'>Se buscan programadores</AlertTitle>
+          <AlertDescription textAlign='left'>Ahora que nos graduamos necesitamos gente que le sobe para mantener esta pagina. Requisitos: <br /><br />* no ser judio;<br />* no haber aprendido en BeePy;<br />* saber Python o TypeScript + React (opcional).<br /><br />Si te interesa (zZZzzz), puedes hacer un pull request <Link color='teal.500' href='https://github.com/Alanxyz/HorariosFeos/'>al repositorio</Link> o enviar un correo a <Link color='teal.500' href='mailto:alansierra@protonmail.com'>alansierra@protonmail.com</Link>.</AlertDescription>
+        </Alert>
+      </Container>
+
+      <Box my='4em'></Box>
 
     </Box>
   );
