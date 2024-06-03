@@ -21,15 +21,20 @@ def format_time(time):
     elif len(time) == 2:
         return f'{time}:00'
     elif len(time) == 4:
-        return f'0{time}'
+        return f'0{int(time[0:-3]) + 1}:00'
+    elif len(time) == 5:
+        return f'{int(time[0:-3]) + 1}:00'
 
 day2number = {
     'LUNES': 1,
     'MARTES': 2,
     'MIÉRCOLES': 3,
+    'MIERCOLES': 3,
     'JUEVES': 4,
+    'JUVES': 4,
     'VIERNES': 5,
-    'SÁBADO': 6
+    'SÁBADO': 6,
+    'SABADO': 6
 }
 
 courses = []
@@ -56,11 +61,13 @@ for _row in _rows[1:]:
         if _text != '':
 
             # Excepciones
-            if course['id'] == '11' and i == 3: _text = 'MARTES/15-17/F8'
-            elif course['id'] == '20' and i == 4: _text = 'VIERNES/15-17/F7'
-            elif course['id'] == '29' and i == 6: _text = 'VIERNES/8-11/LAB. DE BIOLOGÍA EDIF. G'
-            elif course['id'] == '45' and i == 3: _text = 'MARTES/15-17/F2'
-            elif course['id'] == '152' and i == 4: _text = 'MIÉRCOLES/12-14/C2'
+            if course['id'] == '33' and i == 6: _text = 'VIERNES/11-14/LAB. DE BIOLOGÍA, EDIF. G'
+            elif course['id'] == '61' and i == 5: _text = 'LUNES/10-12/LAB.  DE ÓPTICA , EDIF. G'
+            elif course['id'] == '203' and i == 5: _text = 'MARTES/10-12/ LAB. DE TERMODINÁMICA, EDIF. G'
+            # elif course['id'] == '20' and i == 4: _text = 'VIERNES/15-17/F7'
+            # elif course['id'] == '29' and i == 6: _text = 'VIERNES/8-11/LAB. DE BIOLOGÍA EDIF. G'
+            # elif course['id'] == '45' and i == 3: _text = 'MARTES/15-17/F2'
+            # elif course['id'] == '152' and i == 4: _text = 'MIÉRCOLES/12-14/C2'
 
             day = day2number[_text.split('/')[0].strip()]
             begin = format_time(_text.split('/')[1].split('-')[0].strip())
