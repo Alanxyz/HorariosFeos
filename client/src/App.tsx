@@ -7,6 +7,7 @@ import { Scheduler, Course, Session } from './types';
 import { Box, Link, Button, Center, Container, Fade, Flex, FormControl, Heading, Input, InputGroup, InputLeftElement, Spacer, Table, TableContainer, Tag, TagCloseButton, TagLabel, Tbody, Td, Th, Thead, Tr, useColorMode, VStack, Wrap, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, Alert, AlertIcon, AlertTitle, AlertDescription } from '@chakra-ui/react';
 import { AddIcon, MoonIcon, RepeatIcon, SearchIcon, SunIcon } from '@chakra-ui/icons';
 import Week from './Week';
+import Ads from './Ads';
 
 const App: FC = () => {
 
@@ -259,6 +260,8 @@ const App: FC = () => {
           <Heading size='lg' my='10'>Llamen a Dios :0</Heading>
         </Center>
       </Fade>
+
+      <Ads />
 
       <Container>
         <Alert status='warning'
