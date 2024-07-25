@@ -260,20 +260,6 @@ const App: FC = () => {
         </Center>
       </Fade>
 
-      <Container>
-        <Alert status='warning'
-          variant='subtle'
-          flexDirection='column'
-          alignItems='center'
-          justifyContent='center'
-          textAlign='center'
-        >
-          <AlertIcon boxSize='3em'/>
-          <AlertTitle my='1em'>Se buscan programadores</AlertTitle>
-          <AlertDescription textAlign='left'>Ahora que nos graduamos necesitamos gente que le sobe para mantener esta pagina. Requisitos: <br /><br />* no ser judio;<br />* no haber aprendido en BeePy;<br />* saber Python o TypeScript + React (opcional).<br /><br />Si te interesa (zZZzzz), puedes hacer un pull request <Link color='teal.500' href='https://github.com/Alanxyz/HorariosFeos/'>al repositorio</Link> o enviar un correo a <Link color='teal.500' href='mailto:alansierra@protonmail.com'>alansierra@protonmail.com</Link>.</AlertDescription>
-        </Alert>
-      </Container>
-
       <Box my='4em'></Box>
 
     </Box>
