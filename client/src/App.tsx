@@ -27,12 +27,12 @@ const App: FC = () => {
 
     const sessionsDisjoin = (x: Session, y: Session): boolean => {
       if (x.day !== y.day) return true;
-      
+
       const x_begin: number = time2num(x.begin);
       const x_end: number = time2num(x.end);
       const y_begin: number = time2num(y.begin);
       const y_end: number = time2num(y.end);
-      
+
       const begin = Math.min(x_begin, y_begin);
       const end = Math.max(x_end, y_end);
 
@@ -44,11 +44,11 @@ const App: FC = () => {
 
       x.sessions.map((xSession: Session) => {
         y.sessions.map((ySession: Session) => {
-            if (!sessionsDisjoin(xSession, ySession)) disjoin = false;
-            return null;
-          })
+          if (!sessionsDisjoin(xSession, ySession)) disjoin = false;
           return null;
-        });
+        })
+        return null;
+      });
 
       return disjoin;
     }
@@ -57,11 +57,11 @@ const App: FC = () => {
       let isValid = true;
       scheduler.courses.map((i: Course) => {
         scheduler.courses.map((j: Course) => {
-            if (i.id !== j.id) if (!coursesDisjoin(i, j)) isValid = false;
-            return null;
-          });
+          if (i.id !== j.id) if (!coursesDisjoin(i, j)) isValid = false;
           return null;
         });
+        return null;
+      });
 
       return isValid;
     }
@@ -81,20 +81,20 @@ const App: FC = () => {
     } 
 
     const possibleCourses: Course[] = avalibleCourses
-      .filter((course: Course) => 
-        validSchedulers.map(scheduler => 
-          isAValidScheduler({ courses: [...scheduler.courses, course] })
-        ).includes(true)
-      );
+    .filter((course: Course) => 
+            validSchedulers.map(scheduler => 
+                                isAValidScheduler({ courses: [...scheduler.courses, course] })
+                               ).includes(true)
+           );
 
-     let sugestions = possibleCourses.map(course => course.name);
-     sugestions = sugestions
-      .filter((value, index) => sugestions.indexOf(value) === index)
-      .filter(name => !selectedCourses.includes(name));
-    
-    setSchedulers(validSchedulers);
-    setSugestedCourses(sugestions);
-    setGod(validSchedulers.length === 0);
+           let sugestions = possibleCourses.map(course => course.name);
+           sugestions = sugestions
+           .filter((value, index) => sugestions.indexOf(value) === index)
+           .filter(name => !selectedCourses.includes(name));
+
+           setSchedulers(validSchedulers);
+           setSugestedCourses(sugestions);
+           setGod(validSchedulers.length === 0);
   }
 
   // Render
@@ -125,15 +125,15 @@ const App: FC = () => {
                 <Tag key={course}>
                   <TagLabel>{ course }</TagLabel>
                   <TagCloseButton
-                  onClick={() => {
-                    setSelectedCourses(selectedCourses.filter(x => x !== course));
-                    setSchedulers([]);
-                  }}
+                    onClick={() => {
+                      setSelectedCourses(selectedCourses.filter(x => x !== course));
+                      setSchedulers([]);
+                    }}
                   />
                 </Tag>
               ))
             }
-            
+
           </Wrap>
         </Center>
 
@@ -154,58 +154,61 @@ const App: FC = () => {
         <VStack>
           {
             searchInput !== '' && avalibleUDAs
-              .filter(course => course
-                .toLowerCase()
-                .normalize('NFD').replace(/\p{Diacritic}/gu, '')
-                .includes(searchInput.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '')))
-            .filter(course => !selectedCourses.includes(course))
-              .map(course => (
-                <Button
-                  key={course}
-                  onClick={() => {
-                    setSelectedCourses([...selectedCourses, course]);
-                    setSearchInput('');
-                    setSchedulers([]);
-                  }}
-                  width='100%'
-                  size='sm'
-                >{ course }</Button>
-              ))
+            .filter(course => course
+                    .toLowerCase()
+                    .normalize('NFD').replace(/\p{Diacritic}/gu, '')
+                    .includes(searchInput.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '')))
+                    .filter(course => !selectedCourses.includes(course))
+                    .map(course => (
+                      <Button
+                        key={course}
+                        onClick={() => {
+                          setSelectedCourses([...selectedCourses, course]);
+                          setSearchInput('');
+                          setSchedulers([]);
+                        }}
+                        width='100%'
+                        size='sm'
+                      >{ course }</Button>
+                    ))
           }
         </VStack>
 
-        <Accordion allowToggle>
-          <AccordionItem>
-            <AccordionButton>
-              <Box as='span' flex='1' textAlign='left'>
-                <Heading size='sm'>Sugerencias</Heading>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel>
-              <Center>
-                <Wrap>
-                  {
-                    sugestedCourses.map(course => (
-                      <Tag key={course}>
-                        <TagLabel>{ course }</TagLabel>
-                        <TagCloseButton
-                          as={AddIcon}
-                          onClick={() => {
-                            setSelectedCourses([...selectedCourses, course]);
-                            setSearchInput('');
-                            setSchedulers([]);
-                          }}
-                        />
-                      </Tag>
-                    ))
-                  }
-                </Wrap>
-              </Center>
-            </AccordionPanel>
-          </AccordionItem>
-        </Accordion>
-
+        {
+          selectedCourses.length !== 0 ? (
+            <Accordion allowToggle>
+              <AccordionItem>
+                <AccordionButton>
+                  <Box as='span' flex='1' textAlign='left'>
+                    <Heading size='sm'>Sugerencias</Heading>
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+                <AccordionPanel>
+                  <Center>
+                    <Wrap>
+                      {
+                        sugestedCourses.map(course => (
+                          <Tag key={course}>
+                            <TagLabel>{ course }</TagLabel>
+                            <TagCloseButton
+                              as={AddIcon}
+                              onClick={() => {
+                                setSelectedCourses([...selectedCourses, course]);
+                                setSearchInput('');
+                                setSchedulers([]);
+                              }}
+                            />
+                          </Tag>
+                        ))
+                      }
+                    </Wrap>
+                  </Center>
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
+          ) : (<></>)
+        }
       </Container>
 
       <Center>
@@ -219,40 +222,60 @@ const App: FC = () => {
         </Button>
       </Center>
 
-      <Fade in={selectedCourses.length !== 0 && schedulers.length > 0}>
-        {
-          schedulers.map((scheduler: Scheduler, i: number) => (
+      <Container maxWidth='1400px'>
+        <Fade in={selectedCourses.length !== 0 && schedulers.length > 0}>
+          {
+            schedulers.map((scheduler: Scheduler, i: number) => (
               <VStack spacing='12' key={i.toString()}>
-                <Heading size='lg' my='10'>Opción {i + 1}</Heading>
-                <TableContainer fontSize='sm'>
-                  <Table>
-                    <Thead>
-                      <Tr>
-                        <Th>ID</Th>
-                        <Th>Nombre</Th>
-                        <Th>Grupo</Th>
-                        <Th>Profesor</Th>
-                      </Tr>
-                    </Thead>
-                  <Tbody>
-                  {
-                    scheduler.courses.map((course: Course) => (
-                      <Tr key={course.id}>
-                        <Td>{course.id}</Td>
-                        <Td>{course.name}</Td>
-                        <Td>{course.group}</Td>
-                        <Td>{course.teacher}</Td>
-                      </Tr>
-                    ))
-                  }
-                  </Tbody>
-                  </Table>
-                </TableContainer>
-                <Week scheduler={scheduler} />
+                <Heading size='lg' mt='20'>Opción {i + 1}</Heading>
+                <Box
+                  borderWidth='1px'
+                  rounded='md'
+                  p='4'
+                  display="block"
+                  width="100%"
+                  overflowX="auto"
+                >
+                  <TableContainer fontSize='sm'>
+                    <Table>
+                      <Thead>
+                        <Tr>
+                          <Th>ID</Th>
+                          <Th>Nombre</Th>
+                          <Th>Grupo</Th>
+                          <Th>Profesor</Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+                        {
+                          scheduler.courses.map((course: Course) => (
+                            <Tr key={course.id}>
+                              <Td>{course.id}</Td>
+                              <Td>{course.name}</Td>
+                              <Td>{course.group}</Td>
+                              <Td>{course.teacher}</Td>
+                            </Tr>
+                          ))
+                        }
+                      </Tbody>
+                    </Table>
+                  </TableContainer>
+                </Box>
+                <Box
+                  borderWidth='1px'
+                  rounded='md'
+                  p='4'
+                  display="block"
+                  width="100%"
+                  overflowX="auto"
+                >
+                  <Week scheduler={scheduler} />
+                </Box>
               </VStack>
-          ))
-        }
-      </Fade>
+            ))
+          }
+        </Fade>
+      </Container>
 
       <Fade in={god}>
         <Center>
