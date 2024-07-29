@@ -35,8 +35,8 @@ const Week: FC<WeekProps> = (props: WeekProps) => {
               course.sessions.map((session: Session, i: number) => (
                 <GridItem
                   key={`${course.name}-${i}`}
-                  rowStart={parseInt(session.begin.split(':')[0]) - 6 + 2}
-                  rowEnd={parseInt(session.end.split(':')[0]) - 6 + 2}
+                  rowStart={parseInt(session.begin.split(':')[0]) - 6}
+                  rowEnd={parseInt(session.end.split(':')[0]) - 6}
                   colStart={session.day + 1}
                 >
                   <Card
